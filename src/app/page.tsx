@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import Step from './components/Step';
+import ImageSection from './components/ImageSection';
 
 export default function Home() {
   return (
@@ -11,15 +12,15 @@ export default function Home() {
       <MaxWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center ">
         <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50 ">
           <p className="text-sm font-semibold text-gray-700">
-          DocChat est désormais disponible pour le grand public !
+            DocChat est désormais disponible pour le grand public !
           </p>
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-          Discutez avec vos <span className="text-indigo-600">documents</span>
+          Discutez avec vos <span className="text-indigo-600"> documents </span>
           en quelques secondes.
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-        DocChat vous permet d&apos;avoir des conversations avec n&apos;importe
+          DocChat vous permet d&apos;avoir des conversations avec n&apos;importe
           quel document PDF. Il vous suffit de importer votre fichier et de
           commencer à poser des questions immédiatement.
         </p>
@@ -47,20 +48,12 @@ export default function Home() {
               className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.187rem]"
             />
           </div>
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <div className="mt-16 flow-root sm:mt-24">
-              <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <Image
-                  alt="product preview"
-                  src="/dashboard-preview.jpg"
-                  width={1364}
-                  height={866}
-                  quality={100}
-                  className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
-                />
-              </div>
-            </div>
-          </div>
+          <ImageSection
+            src="/dashboard-preview.jpg"
+            alt="product preview"
+            width={1364}
+            height={866}
+          />
 
           <div
             aria-hidden="true"
@@ -112,6 +105,13 @@ export default function Home() {
             aujourd'hui, cela prend vraiment moins d'une minute."
           />
         </ol>
+
+        <ImageSection
+          src="/file-upload-preview.jpg"
+          alt="file-upload"
+          width={1419}
+          height={732}
+        />
       </div>
     </>
   );
