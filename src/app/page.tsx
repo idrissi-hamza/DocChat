@@ -3,6 +3,7 @@ import MaxWrapper from './components/MaxWrapper';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
+import Step from './components/Step';
 
 export default function Home() {
   return (
@@ -10,23 +11,25 @@ export default function Home() {
       <MaxWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center ">
         <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50 ">
           <p className="text-sm font-semibold text-gray-700">
-            Kadas is now public!
+            Kadas est désormais disponible pour le grand public !
           </p>
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
-          Chat with your <span className="text-indigo-600">documents</span> in
-          seconds
+          Discutez avec vos <span className="text-indigo-600">documents</span>
+          en quelques secondes.
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          Kadas allows you to have convesations with any PDF document. Simply
-          upload your file and start asking question right away
+          Kadas vous permet d&apos;avoir des conversations avec n&apos;importe
+          quel document PDF. Il vous suffit de importer votre fichier et de
+          commencer à poser des questions immédiatement.
         </p>
         <Link
           className={buttonVariants({ size: 'lg', className: 'mt-5' })}
           href="/dashboard"
           target="_blank"
         >
-          Get started <ArrowRight className="ml-2 h-5 w-5" />
+          Commencez dès aujourd&apos;hui!
+          <ArrowRight className="ml-2 h-5 w-5" />
         </Link>
       </MaxWrapper>
       {/* value proposition section */}
@@ -72,6 +75,43 @@ export default function Home() {
             />
           </div>
         </div>
+      </div>
+
+      {/*Feature section */}
+      <div className="mx-auto mb-32 mt-32 max-w-5xl sm:mt-56">
+        <div className="mb-12 px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl sm:text-center">
+            <h2 className="mt-2 font-bold  text-4xl text-gray-900 sm:text-5xl">
+              Commencez à chatter en quelques minutes.
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Chatter avec vos fichiers n&apos;a jamais été aussi facile
+              qu&apos;avec Kadas.
+            </p>
+          </div>
+        </div>
+        {/* steps */}
+        <ol className="my-8 space-y-4 pt-8 md:flex  md:space-x-12 md:space-y-0">
+          <Step
+            step=" Étape 1"
+            title="Créez votre compte "
+            description=" Commencez avec notre plan gratuit, ou choisissez le plan"
+            linkHref="/pricing"
+            linkText="Pro."
+          />
+          <Step
+            step=" Étape 2"
+            title="Importez votre fichier PDF. "
+            description="  Nous allons traiter votre fichier pour le rendre prêt pour que
+            vous puissiez discuter."
+          />
+          <Step
+            step=" Étape 3"
+            title="   Commencez à poser des questions. "
+            description="  C'est aussi simple que cela. Essayez Kadas dès
+            aujourd'hui, cela prend vraiment moins d'une minute."
+          />
+        </ol>
       </div>
     </>
   );
