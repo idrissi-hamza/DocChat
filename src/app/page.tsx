@@ -11,7 +11,7 @@ export default function Home() {
       <MaxWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center ">
         <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50 ">
           <p className="text-sm font-semibold text-gray-700">
-            Kadas est désormais disponible pour le grand public !
+          DocChat est désormais disponible pour le grand public !
           </p>
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
@@ -19,7 +19,7 @@ export default function Home() {
           en quelques secondes.
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          Kadas vous permet d&apos;avoir des conversations avec n&apos;importe
+        DocChat vous permet d&apos;avoir des conversations avec n&apos;importe
           quel document PDF. Il vous suffit de importer votre fichier et de
           commencer à poser des questions immédiatement.
         </p>
@@ -86,7 +86,7 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-lg text-gray-600">
               Chatter avec vos fichiers n&apos;a jamais été aussi facile
-              qu&apos;avec Kadas.
+              qu&apos;avec DocChat.
             </p>
           </div>
         </div>
@@ -95,9 +95,9 @@ export default function Home() {
           <Step
             step=" Étape 1"
             title="Créez votre compte "
-            description=" Commencez avec notre plan gratuit, ou choisissez le plan"
+            description=" Commencez avec notre plan gratuit, ou choisissez "
             linkHref="/pricing"
-            linkText="Pro."
+            linkText="le plan Pro."
           />
           <Step
             step=" Étape 2"
@@ -107,8 +107,8 @@ export default function Home() {
           />
           <Step
             step=" Étape 3"
-            title="   Commencez à poser des questions. "
-            description="  C'est aussi simple que cela. Essayez Kadas dès
+            title="   Posez vos questions. "
+            description="  C'est aussi simple que cela. Essayez DocChat dès
             aujourd'hui, cela prend vraiment moins d'une minute."
           />
         </ol>
