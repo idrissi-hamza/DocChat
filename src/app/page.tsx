@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import MaxWrapper from './components/MaxWrapper';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
-import Step from './components/Step';
-import ImageSection from './components/ImageSection';
+import ImageSection from '../components/ImageSection';
+import MaxWrapper from '@/components/MaxWrapper';
+import Step from '@/components/Step';
 
 export default function Home() {
   return (
