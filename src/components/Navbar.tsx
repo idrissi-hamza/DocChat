@@ -1,10 +1,16 @@
+'use client';
 import React from 'react';
 import MaxWrapper from './MaxWrapper';
 import Link from 'next/link';
 import { Button, buttonVariants } from './ui/button';
 import { ArrowRight } from 'lucide-react';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
+import useLoginModal from '@/app/hooks/useLogingModal';
 
 const Navbar = () => {
+  const { onOpen: openRegisterModal } = useRegisterModal();
+  const { onOpen: openLoginModal } = useLoginModal();
+
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
       <MaxWrapper>
@@ -27,14 +33,15 @@ const Navbar = () => {
                 Pricing
               </Link>
               <Button
-                  variant= 'ghost'
-                  size= 'sm'
+                variant="ghost"
+                size="sm"
+                onClick={openLoginModal}
               >
                 Se connecter
               </Button>
               <Button
-                  size= 'sm'
-                
+                size="sm"
+                onClick={openRegisterModal}
               >
                 S&apos;inscrire
                 <ArrowRight className="ml-1.5 h-5 w-5" />
