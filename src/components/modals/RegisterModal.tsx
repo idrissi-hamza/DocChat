@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Modal from './Modal';
 import Heading from '../Heading';
@@ -15,31 +15,36 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useLoginModal from '@/app/hooks/useLogingModal';
+import axios from 'axios';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { BASE_URL } from '@/lib/const';
 
 // Define Zod schema for form validation
 const schema = z.object({
-  name: z.string().nonempty('Le nom est requis.'),
+  name: z.string().min(1, 'Le nom est requis.'),
   email: z
     .string()
     .email('Adresse e-mail invalide.')
-    .nonempty("L'adresse e-mail est requise."),
+    .min(1, "L'adresse e-mail est requise."),
   password: z
     .string()
-    .min(6, 'Le mot de passe doit comporter au moins 6 caractères.')
-    .nonempty('Le mot de passe est requis.'),
+    .min(6, 'Le mot de passe doit comporter au moins 6 caractères.'),
 });
 
 export type FormValuesType = z.infer<typeof schema>;
 
 const RegisterModal = () => {
+  const router = useRouter();
+
   const { isOpen, onClose: closeRegisterModal } = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
   const { onOpen: openLoginModal } = useLoginModal();
 
-  const toggle = () => {
+  const toggle = useCallback(() => {
     closeRegisterModal();
     openLoginModal();
-  };
+  }, [closeRegisterModal, openLoginModal]);
 
   const {
     register,
@@ -49,15 +54,31 @@ const RegisterModal = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormValuesType> = (data) => {
-    //to fix post data to end point
+  const onSubmit: SubmitHandler<FormValuesType> = async (data) => {
     setIsLoading(true);
-    toast.success(JSON.stringify(data));
-    setTimeout(() => {
-      closeRegisterModal();
-    }, 3000);
+    toast.loading('', { id: '1' });
 
-    setIsLoading(false);
+    try {
+      await axios.post(`${BASE_URL}/api/register`, data);
+      await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+      router.refresh();
+      toast.success('"Enregistré avec succès !', { id: '1' });
+
+      closeRegisterModal();
+      return;
+    } catch (err: any) {
+      toast.error(
+        err?.response?.data?.error ||
+          'An unexpected error occurred during registration.',
+        { id: '1' }
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const bodyContent = (
@@ -101,7 +122,7 @@ const RegisterModal = () => {
       <hr />
       <Button
         variant="outline"
-        onClick={() => {}}
+        onClick={() => signIn('google')}
       >
         <FcGoogle className="mr-2 h-4 w-4" />
         Continuer avec Google.

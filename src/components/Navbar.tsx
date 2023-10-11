@@ -6,8 +6,14 @@ import { Button, buttonVariants } from './ui/button';
 import { ArrowRight } from 'lucide-react';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLogingModal';
+import { User } from '@prisma/client';
+import UserMenu from './UserMenu';
 
-const Navbar = () => {
+interface NavbarProps {
+  currentUser: User | null;
+}
+
+const Navbar = ({ currentUser }: NavbarProps) => {
   const { onOpen: openRegisterModal } = useRegisterModal();
   const { onOpen: openLoginModal } = useLoginModal();
 
@@ -21,32 +27,57 @@ const Navbar = () => {
           >
             DocChat.
           </Link>
-          <div className="hidden items-center space-x-4 sm:flex">
-            <>
-              <Link
-                href="/pricing"
-                className={buttonVariants({
-                  variant: 'ghost',
-                  size: 'sm',
-                })}
-              >
-                Pricing
-              </Link>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={openLoginModal}
-              >
-                Se connecter
-              </Button>
-              <Button
-                size="sm"
-                onClick={openRegisterModal}
-              >
-                S&apos;inscrire
-                <ArrowRight className="ml-1.5 h-5 w-5" />
-              </Button>
-            </>
+          <div className=" items-center space-x-4 ">
+            {!currentUser ? (
+              <>
+                <div className="hidden sm:flex">
+                  <Link
+                    href="/pricing"
+                    className={buttonVariants({
+                      variant: 'ghost',
+                      size: 'sm',
+                    })}
+                  >
+                    Pricing
+                  </Link>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={openLoginModal}
+                  >
+                    Se connecter
+                  </Button>
+                  <Button
+                    size="sm"
+                    onClick={openRegisterModal}
+                  >
+                    S&apos;inscrire
+                    <ArrowRight className="ml-1.5 h-5 w-5" />
+                  </Button>
+                </div>
+                <div className="sm:hidden flex">
+                  <UserMenu currentUser={currentUser} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="hidden sm:flex">
+                  <Link
+                    href="/pricing"
+                    className={buttonVariants({
+                      variant: 'ghost',
+                      size: 'sm',
+                    })}
+                  >
+                    Pricing
+                  </Link>
+                  <UserMenu currentUser={currentUser} />
+                </div>
+                <div className="sm:hidden flex">
+                  <UserMenu currentUser={currentUser} />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </MaxWrapper>

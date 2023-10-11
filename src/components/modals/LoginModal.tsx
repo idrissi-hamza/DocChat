@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,28 +16,32 @@ import { Button } from '../ui/button';
 import useLoginModal from '@/app/hooks/useLogingModal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
 const schema = z.object({
   email: z
     .string()
     .email('Adresse e-mail invalide.')
-    .nonempty("L'adresse e-mail est requise."),
+    .min(1, "L'adresse e-mail est requise."),
   password: z
     .string()
-    .min(6, 'Le mot de passe doit comporter au moins 6 caractères.')
-    .nonempty('Le mot de passe est requis.'),
+    .min(6, 'Le mot de passe doit comporter au moins 6 caractères.'),
 });
 
 export type FormValuesType = z.infer<typeof schema>;
 
 const LoginModal = () => {
+  const router = useRouter();
+
   const { isOpen, onClose: closeLoginModal } = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const { onOpen: openRegisterModal } = useRegisterModal();
 
-  const toggle = () => {
+  const toggle = useCallback(() => {
     closeLoginModal();
     openRegisterModal();
-  };
+  }, [closeLoginModal, openRegisterModal]);
   const {
     register,
     handleSubmit,
@@ -46,15 +50,27 @@ const LoginModal = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormValuesType> = (data) => {
-    setIsLoading(true);
+  const onSubmit: SubmitHandler<FormValuesType> = async (data) => {
+    try {
+      setIsLoading(true);
+      const signInResponse = await signIn('credentials', {
+        ...data,
+        redirect: false,
+      });
 
-    toast.success(JSON.stringify(data));
-    setTimeout(() => {
-      closeLoginModal();
-    }, 3000);
-
-    setIsLoading(false);
+      if (signInResponse?.ok) {
+        toast.success('Logged in');
+        router.refresh();
+        closeLoginModal();
+      }
+      if (signInResponse?.error) {
+        toast.error(signInResponse.error);
+      }
+    } catch (error) {
+      toast.error('An unexpected error occurred during sign-in.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const bodyContent = (
@@ -89,7 +105,7 @@ const LoginModal = () => {
       <hr />
       <Button
         variant="outline"
-        onClick={() => {}}
+        onClick={() => signIn('google')}
       >
         <FcGoogle className="mr-2 h-4 w-4" /> Continuer avec Google.
       </Button>
