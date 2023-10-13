@@ -7,6 +7,7 @@ import ToasterProvider from './providers/ToastProvider';
 import { cn } from '@/lib/utils';
 import LoginModal from '@/components/modals/LoginModal';
 import getCurrentUser from './actions/getCurrentUser';
+import UploadModal from '@/components/modals/UploadModal';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,13 +30,14 @@ export default async function RootLayout({
     >
       <body
         className={cn(
-          'min-h-screen font-sans antialiased grainy',
+          'min-h-screen font-sans antialiased grainy ',
           inter.className
         )}
       >
         <ToasterProvider />
         <RegisterModal />
         <LoginModal />
+        <UploadModal />
         <Navbar currentUser={currentUser} />
         {children}
       </body>
