@@ -8,5 +8,4 @@ const handler = (req: Request) =>
     router: appRouter,
     createContext: () => ({}),
   });
-
 export { handler as GET, handler as POST };
