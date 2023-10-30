@@ -1,6 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { privateProcedure, publicProcedure, router } from './trpc';
-import { getServerSession } from 'next-auth';
+import { privateProcedure,  router } from './trpc';
 import db from '@/lib/prisma';
 import { z } from 'zod';
 
@@ -13,6 +12,21 @@ export const appRouter = router({
       },
     });
   }),
+
+  getFile: privateProcedure
+    .input(z.object({ key: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { userId } = ctx;
+      const file = await db.file.findFirst({
+        where: {
+          key: input.key,
+          userId,
+        },
+      });
+      if (!file) throw new TRPCError({ code: 'NOT_FOUND' });
+      return file;
+    }),
+
   deleteFile: privateProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
