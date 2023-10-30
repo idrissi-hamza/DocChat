@@ -1,6 +1,8 @@
 'use client';
 
+import useLoginModal from '@/app/hooks/useLogingModal';
 import Heading from './Heading';
+import { useEffect } from 'react';
 
 interface EmptyStateProps {
   title?: string;
@@ -8,9 +10,21 @@ interface EmptyStateProps {
 }
 
 const EmptyState = ({
-  title = 'No exact matches',
-  subtitle = 'Try changing or removing some of your filters.',
+  title = 'UNAUTHORIZED',
+  subtitle = '',
 }: EmptyStateProps) => {
+
+  const { onOpen } = useLoginModal();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onOpen()
+    }, 500);
+
+
+    return () => clearTimeout(timer);
+
+  }, [])
+
   return (
     <div className=" flex flex-col gap-2 justify-center items-center h-full  mt-10">
       <Heading
