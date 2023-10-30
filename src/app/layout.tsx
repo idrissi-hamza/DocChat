@@ -8,6 +8,9 @@ import { cn } from '@/lib/utils';
 import LoginModal from '@/components/modals/LoginModal';
 import getCurrentUser from './actions/getCurrentUser';
 import UploadModal from '@/components/modals/UploadModal';
+import Providers from '@/components/Providers';
+
+import "react-loading-skeleton/dist/skeleton.css"
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,19 +31,22 @@ export default async function RootLayout({
       lang="en"
       className="light"
     >
-      <body
-        className={cn(
-          'min-h-screen font-sans antialiased grainy ',
-          inter.className
-        )}
-      >
-        <ToasterProvider />
-        <RegisterModal />
-        <LoginModal />
-        <UploadModal />
-        <Navbar currentUser={currentUser} />
-        {children}
-      </body>
+      <Providers>
+        <body
+          className={cn(
+            'min-h-screen font-sans antialiased grainy ',
+            inter.className
+          )}
+        >
+          <ToasterProvider />
+          <RegisterModal />
+          <LoginModal />
+          <UploadModal />
+
+          <Navbar currentUser={currentUser} />
+          {children}
+        </body>
+      </Providers>
     </html>
   );
 }

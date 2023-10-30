@@ -2,12 +2,10 @@ import React from 'react';
 import getCurrentUser from '../actions/getCurrentUser';
 import EmptyState from '@/components/EmptyState';
 import Dashboard from '@/components/DashboardView';
-import getUserFiles from '../actions/getUserFiles';
+
 
 const page = async () => {
   const currentUser = await getCurrentUser();
-
-  const files = await getUserFiles(currentUser?.id as string);
 
   if (!currentUser) {
     return (
@@ -20,8 +18,6 @@ const page = async () => {
 
   return (
     <Dashboard
-      currentUser={currentUser}
-      files={files}
     />
   );
 };
