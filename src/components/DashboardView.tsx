@@ -2,13 +2,11 @@
 import React, { useState } from 'react';
 import Heading from './Heading';
 import UploadButton from './UploadButton';
-import { File } from '@prisma/client';
 import Link from 'next/link';
 import { Loader2, Plus, Trash } from 'lucide-react';
 import { format } from 'date-fns';
 
 import Skeleton from 'react-loading-skeleton'
-import { SerializedStateDates } from '@/types/generic';
 import { trpc } from '@/app/_trpc/client';
 
 
