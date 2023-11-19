@@ -75,8 +75,7 @@ const UploadDropzone = () => {
           const key = fileResponse?.key
 
           if (!key) {
-            return toast.error('key Something went wrong')
-
+            return toast.error('Something went wrong')
           }
 
           clearInterval(progressInterval)
